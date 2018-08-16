@@ -7,7 +7,10 @@ exports.assertion = class ElementRegresses {
         this.message = `Deviance regression (pass): <${selector}> comparison passed`;
         this.expected = threshold || this.api.globals.deviance.regression.threshold;
         this.value = (result) => {
-            result.toString = () => result.message;
+            if (hasProperty(result, 'message')) {
+                result.toString = () => result.message;
+            }
+
             return result;
         };
     }
